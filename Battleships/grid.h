@@ -14,8 +14,12 @@ public:
 	Grid() {};
 	~Grid() {};
 
+	inline int GetGridSize();
+
 	//Supposed to be used between rounds to augment grid size
 	void Initialize(int row, int column, int screenWidth, int screenHeight);
+
+	template<typename T>void CheckGrid(T &fleet);
 
 	void Listen(int mouseX, int mouseY);
 	void Update();

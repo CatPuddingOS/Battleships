@@ -78,6 +78,10 @@ void Cell::Listen(int mouseX, int mouseY)
 void Cell::Render(SDL_Renderer* renderer)
 {
 	active == true ? SDL_SetRenderDrawColor(renderer, 0, 0, 50, 255) : SDL_SetRenderDrawColor(renderer, 50, 0, 0, 255);
+	if (occupied == true)
+	{
+		SDL_SetRenderDrawColor(renderer, 0, 50, 0, 255);
+	}
 	SDL_RenderFillRect(renderer, &cellBody);
 
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);

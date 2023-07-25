@@ -1,6 +1,11 @@
 #include <SDL.h>
 #include "unity_build.h"
 
+inline int Grid::GetGridSize()
+{
+	return cellCount;
+}
+
 void Grid::Initialize(int row, int col, int screenWidth, int screenHeight) {
 	//Lazy because 'default contructor'
 	size[0] = row;
@@ -29,8 +34,19 @@ void Grid::Initialize(int row, int col, int screenWidth, int screenHeight) {
 	}
 }
 
+template<typename T> void Grid::CheckGrid(T &fleet)
+{
+	std::vector<int> vec = fleet->destroyerInstance->GetLocation();
+	for (int i = 0; i < vec.size(); i++)
+	{
+		cellArr[vec[i]]->occupied = true;
+		std::cout << "Ship active cell: " << cellArr[vec[i]]->ID << std::endl;
+	}
+}
+
 void Grid::Listen(int mouseX, int mouseY)
 {
+	//Listen for changes in each cell of the grid
 	for (int i = 0; i < cellCount; i++)
 	{
 		cellArr[i]->Listen(mouseX, mouseY);

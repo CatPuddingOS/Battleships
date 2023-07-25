@@ -3,20 +3,6 @@
 #define _CELL_
 #include <SDL.h>
 #include <vector>
-//Board Numbering
-enum
-{
-	A = 11,
-	B = 12,
-	C = 13,
-	D = 14,
-	E = 15,
-	F = 16,
-	G = 17,
-	H = 18,
-	I = 19,
-	J = 20
-};
 
 struct Properties
 {
@@ -48,8 +34,8 @@ public:
 
 
 	void Initialize(int id, float xpos, float ypos, float width, float height);
-	void MouseEnter();
-	void MouseLeave();
+	bool MouseEnter(int x, int y); //Returns true if the mouse intersects the cell, false otherwise
+	void MouseLeave(); //Sets active member variable to false
 
 	void Listen(int mouseX, int mouseY);
 	void Update();

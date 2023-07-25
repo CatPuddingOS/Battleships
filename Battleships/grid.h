@@ -5,7 +5,6 @@
 #include <SDL.h>
 #include <iostream>
 #include <vector>
-#include "base_entity.h"
 
 class Grid {
 public:

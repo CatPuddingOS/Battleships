@@ -19,61 +19,65 @@ void Cell::Initialize(int id, float xpos, float ypos, float width, float height)
 	cellBody.w = Width;
 	cellBody.h = Height;
 
+	//Needs a cleanup
 	for (int i = 0; i < 5; i++)
 	{
 		pointsArr[i].x = X; 
 		pointsArr[i].y = Y;
-		break;
 
 		if (i == 1)
 		{
 			X + Width == 1920 ? pointsArr[i].x = X + Width - 1.f : pointsArr[i].x = X + Width; 
 			pointsArr[i].y = Y;
-			break;
 		}
 		else if (i == 2)
 		{
 			X + Width == 1920 ? pointsArr[i].x = X + Width - 1.f : pointsArr[i].x = X + Width;
 			Y + Height == 1080 ? pointsArr[i].y = Y + Height - 1.f : pointsArr[i].y = Y + Height;
-			break;
 		}
 		else if (i == 3)
 		{
 			pointsArr[i].x = X;
 			Y + Height == 1080 ? pointsArr[i].y = Y + Height - 1.f : pointsArr[i].y = Y + Height;
-			break;
 		}
 		else if (i == 4)
 		{
 			pointsArr[i].x = X;
 			pointsArr[i].y = Y;
-			break;
 		}
 	}
 }
 
-void Cell::MouseEnter()
+bool Cell::MouseEnter(int x, int y)
 {
-	std::cout << "\n\n\nEntered Cell " << ID << "\n\n\n";
-	active = true;
+	if (x >= cellBody.x && x <= cellBody.x + cellBody.w && y >= cellBody.y && y <= cellBody.y + cellBody.h)
+	{
+		if (active == true) { return true; }
+
+		std::cout << "\n\nEntered Cell " << ID << "\n\n";
+		active = true;
+		return true;
+	}
+	return false;
 }
 
 void Cell::MouseLeave()
 {
+	std::cout << "\n\nLeft Cell " << ID << "\n\n";
 	active = false;
 }
 
 void Cell::Listen(int mouseX, int mouseY)
 {
-	if (active == true) { return; };
-
-	if (mouseX >= cellBody.x && mouseX <= cellBody.x + cellBody.w && mouseY >= cellBody.y && mouseY <= cellBody.y + cellBody.h)
-	{ MouseEnter(); }
+	if (!MouseEnter(mouseX, mouseY) && active == true)
+	{
+		MouseLeave();
+	}
 }
 
 void Cell::Render(SDL_Renderer* renderer)
 {
-	SDL_SetRenderDrawColor(renderer, 50, 0, 0, 255);
+	active == true ? SDL_SetRenderDrawColor(renderer, 0, 0, 50, 255) : SDL_SetRenderDrawColor(renderer, 50, 0, 0, 255);
 	SDL_RenderFillRect(renderer, &cellBody);
 
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);

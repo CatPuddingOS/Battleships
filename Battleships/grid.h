@@ -8,8 +8,7 @@
 
 class Grid {
 public:
-	//Array holding the size of the grid to be used.
-	//Index 0 controls the # of rows. Index 1; the # of columns.
+	int cellCount; //Product of both indecies of the 'size[]' member array
 
 	Grid() {};
 	~Grid() {};
@@ -30,7 +29,6 @@ private:
 	int size[2]; //Number of rows and columns in the grid always size[2]
 	int WIDTH; //Screen Height, used to instantiate cell objects
 	int HEIGHT; //Screen Width, used to instantiate cell objects
-	int cellCount; //Product of both indecies of the 'size[]' member array
 	std::vector<std::unique_ptr<Cell>> cellArr; //Container for cell object pointers
 };
 

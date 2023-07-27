@@ -3,7 +3,5 @@
 
 Destroyer::Destroyer()
 {
-	int arr[3] = { 1,2,3 };
-
-	Initialize(3, arr);
+	Initialize(3);
 }

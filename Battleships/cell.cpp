@@ -54,7 +54,7 @@ bool Cell::MouseEnter(int x, int y)
 	{
 		if (active == true) { return true; }
 
-		std::cout << "\n\nEntered Cell " << ID << "\n\n";
+		//std::cout << "\n\nEntered Cell " << ID << "\n\n";
 		active = true;
 		return true;
 	}
@@ -63,7 +63,7 @@ bool Cell::MouseEnter(int x, int y)
 
 void Cell::MouseLeave()
 {
-	std::cout << "\n\nLeft Cell " << ID << "\n\n";
+	//std::cout << "\n\nLeft Cell " << ID << "\n\n";
 	active = false;
 }
 

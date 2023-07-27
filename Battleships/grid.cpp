@@ -15,8 +15,8 @@ void Grid::Initialize(int row, int col, int screenWidth, int screenHeight) {
 	cellCount = row * col;
 	cellArr.resize(cellCount);
 
-	float projectedX = WIDTH / size[0]; //Distance between X lines (Vertical)
-	float projectedY = HEIGHT / size[1]; //Distance between Y lines (Horizontal)
+	float newCellWidth = WIDTH / size[0]; //Distance between X lines (Vertical)
+	float newCellHeight = HEIGHT / size[1]; //Distance between Y lines (Horizontal)
 	int lastX = 0;
 	int lastY = 0;
 
@@ -24,12 +24,12 @@ void Grid::Initialize(int row, int col, int screenWidth, int screenHeight) {
 	for (int i = 0; i < cellCount; i++)
 	{
 		cellArr[i] = (std::make_unique<Cell>());
-		cellArr[i]->Initialize(i, lastX, lastY, projectedX, projectedY);
-		lastX += projectedX;
+		cellArr[i]->Initialize(i, lastX, lastY, newCellWidth, newCellHeight);
+		lastX += newCellWidth;
 		if (lastX >= WIDTH)
 		{
 			lastX = 0;
-			lastY += projectedY;
+			lastY += newCellHeight;
 		}
 	}
 }
@@ -40,7 +40,7 @@ template<typename T> void Grid::CheckGrid(T &fleet)
 	for (int i = 0; i < vec.size(); i++)
 	{
 		cellArr[vec[i]]->occupied = true;
-		std::cout << "Ship active cell: " << cellArr[vec[i]]->ID << std::endl;
+		//std::cout << "Ship active cell: " << cellArr[vec[i]]->ID << std::endl;
 	}
 }
 

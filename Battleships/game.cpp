@@ -4,6 +4,8 @@
 Game::Game() {}
 Game::~Game() {}
 
+bool checkSpawn = false;
+
 std::unique_ptr<Game> Game::gameInstance = nullptr;
 std::unique_ptr<Grid> gridInstance = nullptr;
 std::unique_ptr<Fleet> fleetInstance = nullptr;
@@ -31,7 +33,7 @@ void Game::Initialize(const char* title, int width, int height, bool fullscreen)
 	gridInstance->Initialize(10, 10, width, height);
 
 	fleetInstance = std::make_unique<Fleet>();
-	fleetInstance->FleetScatter();
+	fleetInstance->FleetScatter(gridInstance->cellCount);
 
 	gridInstance->CheckGrid(fleetInstance); 
 
@@ -40,19 +42,30 @@ void Game::Initialize(const char* title, int width, int height, bool fullscreen)
 
 void Game::Update() 
 {
-
+	gridInstance->CheckGrid(fleetInstance);
 }
 
 void Game::Handle()
 {
 	const Uint8* keyStates = SDL_GetKeyboardState(NULL);
 	SDL_Event e;
+	SDL_Scancode key;
+
 	while (SDL_PollEvent(&e))
 	{
 		switch (e.type)
 		{
 		case SDL_QUIT:	Game::GetInstance()->Quit(); break;
 		case SDL_KEYDOWN:
+			switch (e.key.keysym.sym)
+			{
+			case SDLK_w:
+				std::cout << "\n\n### --- RESETTING --- ###\n\n";
+				fleetInstance->FleetScatter(gridInstance->cellCount);
+				break;
+			default:
+				break;
+			}
 		case SDL_MOUSEMOTION:
 			gridInstance->Listen(e.motion.x, e.motion.y);
 			break;

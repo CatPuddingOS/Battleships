@@ -13,7 +13,7 @@ public:
 
 	Fleet() : fleetDestroyed(0), fleetSize(1) { destroyerInstance = std::make_unique<Destroyer>(); }
 
-	void FleetScatter(); //randomly place the fleet of ships on a grid. Ships are placed vertically and horizontally.
+	void FleetScatter(int range); //randomly place the fleet of ships on a grid. Ships are placed vertically and horizontally.
 
 private:
 	bool fleetDestroyed;

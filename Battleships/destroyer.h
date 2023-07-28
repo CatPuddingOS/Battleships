@@ -6,7 +6,7 @@
 class Destroyer : public Ship
 {
 public:
-	Destroyer();
+	Destroyer() { Initialize(2); };
 };
 
 #endif // !_DESTROYER_

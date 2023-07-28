@@ -27,9 +27,6 @@
     <ClCompile Include="cell.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="destroyer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="fleet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -54,6 +51,21 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="fleet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="submarine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="carrier.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="battleship.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="crusier.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ships.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

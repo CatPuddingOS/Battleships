@@ -3,5 +3,13 @@
 
 void Fleet::FleetScatter(int range)
 {
-	destroyerInstance->GenerateLocation(range);
+	for (int i = 0; i < fleetSize; i++)
+	{
+		fleetArr[i].GenerateLocation(range);
+	}
+}
+
+int Fleet::GetSize()
+{
+	return fleetSize;
 }

@@ -36,11 +36,21 @@ void Grid::Initialize(int row, int col, int screenWidth, int screenHeight) {
 
 template<typename T> void Grid::CheckGrid(T &fleet)
 {
-	std::vector<int> vec = fleet->destroyerInstance->GetLocation();
-	for (int i = 0; i < vec.size(); i++)
+	//Reset occupied for all cells (band-aid fix)
+	for (int c = 0; c < cellCount; c++)
 	{
-		cellArr[vec[i]]->occupied = true;
-		//std::cout << "Ship active cell: " << cellArr[vec[i]]->ID << std::endl;
+		cellArr[c]->occupied = false;
+	}
+
+	//Set cells that match the ships location are flagged occupied
+	std::vector<int> vec;
+	for (int s = 0; s < fleet->GetSize(); s++)
+	{
+		vec = fleet->fleetArr[s].GetLocation();
+		for (int i = 0; i < vec.size(); i++)
+		{
+			cellArr[vec[i]]->occupied = true;
+		}
 	}
 }
 

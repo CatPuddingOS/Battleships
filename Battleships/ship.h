@@ -58,6 +58,12 @@ public:
 				std::cout << "Restricting to: " << location[i] + orientation << std::endl;
 				location.push_back(location[i] + orientation);
 			}
+			else if (location[i] + orientation % 10 == 0)
+			{
+				MoveForward();
+				std::cout << "Restricting to: " << location[i] - orientation << std::endl;
+				location.push_back(location[i] - orientation);
+			}
 
 			std::cout << "Default pushing to: " << location[i] + orientation << std::endl;
 			location.push_back(location[i] + orientation);

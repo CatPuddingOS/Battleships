@@ -3,19 +3,38 @@
 #define _FLEET_
 
 #include <iostream>
-#include "destroyer.h"
-
+#include "ships.h"
 
 class Fleet
 {
 public:
-	std::unique_ptr<Destroyer> destroyerInstance;
+	std::vector<Ship> fleetArr;
 
-	Fleet() : fleetDestroyed(0), fleetSize(1) { destroyerInstance = std::make_unique<Destroyer>(); }
+	Fleet() : fleetDestroyed(0), fleetSize(5) 
+	{  
+		carrierInstance = std::make_unique<Carrier>();
+		battleshipInstance = std::make_unique<Battleship>();
+		crusierInstance = std::make_unique<Crusier>();
+		submarineInstance = std::make_unique<Submarine>();
+		destroyerInstance = std::make_unique<Destroyer>();
+
+		fleetArr.reserve(fleetSize);
+		fleetArr.push_back(*carrierInstance);
+		fleetArr.push_back(*battleshipInstance);
+		fleetArr.push_back(*crusierInstance);
+		fleetArr.push_back(*submarineInstance);
+		fleetArr.push_back(*destroyerInstance);
+	}
 
 	void FleetScatter(int range); //randomly place the fleet of ships on a grid. Ships are placed vertically and horizontally.
+	int GetSize();
 
 private:
+	std::unique_ptr<Ship> carrierInstance;
+	std::unique_ptr<Ship> battleshipInstance;
+	std::unique_ptr<Ship> crusierInstance;
+	std::unique_ptr<Ship> submarineInstance;
+	std::unique_ptr<Ship> destroyerInstance;
 	bool fleetDestroyed;
 	int fleetSize;
 };

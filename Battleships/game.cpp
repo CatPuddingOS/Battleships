@@ -31,6 +31,7 @@ void Game::Initialize(const char* title, int width, int height, bool fullscreen)
 	
 	gridInstance = std::make_unique<Grid>();
 	gridInstance->Initialize(10, 10, width, height);
+	gridInstance->CreateGrid();
 
 	fleetInstance = std::make_unique<Fleet>();
 	fleetInstance->FleetScatter(gridInstance->cellCount);

@@ -4,30 +4,15 @@
 #include <SDL.h>
 #include <vector>
 
-struct Properties
-{
-public:
-	Properties(float Xpos, float Ypos, int width, int height)
-	{
-		X = Xpos;
-		Y = Ypos;
-		Width = width;
-		Height = height;
-	}
-
-	float X, Y; //Position of the SDL_Rect, Doubles as starting points for SDL_RenderDrawLines()
-	int Width, Height; //Size of the SDL_Rect, Doubles as line spacing for SDL_RenderDrawLines()
-};
-
 class Cell
 {
 public:
 	int ID; //Handle for the cell.
-	bool occupied; //True if there is an occupant object in the selected cell.
 	bool struck; // True if the selected cell has been struck once.
 	bool active;
-	int X, Y; //Position of the SDL_Rect, Doubles as starting points for SDL_RenderDrawLines()
-	float Width, Height; //Size of the SDL_Rect, Doubles as line spacing for SDL_RenderDrawLines()
+	bool occupied; //True if there is an occupant object in the selected cell.
+	float Width, Height;
+	int X, Y;
 
 	SDL_Rect cellBody; //Center rectangle of a cell
 	SDL_Point pointsArr[5]; //Points used to render lines

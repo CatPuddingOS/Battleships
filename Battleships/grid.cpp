@@ -14,22 +14,25 @@ void Grid::Initialize(int row, int col, int screenWidth, int screenHeight) {
 	HEIGHT = screenHeight;
 	cellCount = row * col;
 	cellArr.resize(cellCount);
+}
 
+void Grid::CreateGrid()
+{
 	float newCellWidth = WIDTH / size[0]; //Distance between X lines (Vertical)
 	float newCellHeight = HEIGHT / size[1]; //Distance between Y lines (Horizontal)
-	int lastX = 0;
-	int lastY = 0;
+	int lastPointX = 0;
+	int lastPointY = 0;
 
 	//Populate cells[] with properly sized and positioned cells
 	for (int i = 0; i < cellCount; i++)
 	{
 		cellArr[i] = (std::make_unique<Cell>());
-		cellArr[i]->Initialize(i, lastX, lastY, newCellWidth, newCellHeight);
-		lastX += newCellWidth;
-		if (lastX >= WIDTH)
+		cellArr[i]->Initialize(i, lastPointX, lastPointY, newCellWidth, newCellHeight);
+		lastPointX += newCellWidth;
+		if (lastPointX >= WIDTH)
 		{
-			lastX = 0;
-			lastY += newCellHeight;
+			lastPointX = 0;
+			lastPointY += newCellHeight;
 		}
 	}
 }

@@ -14,14 +14,14 @@ public:
 	{  
 		carrierInstance = std::make_unique<Carrier>();
 		battleshipInstance = std::make_unique<Battleship>();
-		crusierInstance = std::make_unique<Crusier>();
+		cruiserInstance = std::make_unique<Cruiser>();
 		submarineInstance = std::make_unique<Submarine>();
 		destroyerInstance = std::make_unique<Destroyer>();
 
 		fleetArr.reserve(fleetSize);
 		fleetArr.push_back(*carrierInstance);
 		fleetArr.push_back(*battleshipInstance);
-		fleetArr.push_back(*crusierInstance);
+		fleetArr.push_back(*cruiserInstance);
 		fleetArr.push_back(*submarineInstance);
 		fleetArr.push_back(*destroyerInstance);
 	}
@@ -32,7 +32,7 @@ public:
 private:
 	std::unique_ptr<Ship> carrierInstance;
 	std::unique_ptr<Ship> battleshipInstance;
-	std::unique_ptr<Ship> crusierInstance;
+	std::unique_ptr<Ship> cruiserInstance;
 	std::unique_ptr<Ship> submarineInstance;
 	std::unique_ptr<Ship> destroyerInstance;
 	bool fleetDestroyed;

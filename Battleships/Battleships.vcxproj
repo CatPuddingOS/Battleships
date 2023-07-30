@@ -148,7 +148,7 @@
     <ClInclude Include="battleship.h" />
     <ClInclude Include="carrier.h" />
     <ClInclude Include="cell.h" />
-    <ClInclude Include="crusier.h" />
+    <ClInclude Include="cruiser.h" />
     <ClInclude Include="destroyer.h" />
     <ClInclude Include="fleet.h" />
     <ClInclude Include="game.h" />

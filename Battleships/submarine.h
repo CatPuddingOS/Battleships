@@ -6,7 +6,7 @@
 class Submarine : public Ship
 {
 public:
-	Submarine() { Initialize(3); };
+	Submarine() { Initialize(3, "Submarine"); };
 };
 
 #endif // !_SUB_

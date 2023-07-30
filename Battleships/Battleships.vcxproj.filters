@@ -62,7 +62,7 @@
     <ClInclude Include="battleship.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="crusier.h">
+    <ClInclude Include="cruiser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ships.h">

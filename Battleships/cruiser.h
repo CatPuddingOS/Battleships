@@ -3,10 +3,10 @@
 #define _CRUSIER_
 #include "ship.h"
 
-class Crusier : public Ship
+class Cruiser : public Ship
 {
 public:
-	Crusier() { Initialize(3); };
+	Cruiser() { Initialize(3, "Cruiser"); };
 };
 
 #endif // !_CRUSIER_

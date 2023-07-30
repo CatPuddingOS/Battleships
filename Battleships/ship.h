@@ -13,9 +13,10 @@ enum {
 class Ship
 {
 public:
-	void Initialize(int s)
+	void Initialize(int s, std::string name)
 	{
 		size = s;
+		shipClass = name;
 		destroyed = false;
 	}
 
@@ -95,6 +96,7 @@ public:
 	std::vector<int> GetLocation() { return location; }
 
 private:
+	std::string shipClass;
 	int size;
 	bool destroyed;
 	int orientation;

@@ -17,6 +17,7 @@ public:
 
 	void Initialize(int row, int column, int screenWidth, int screenHeight);
 	void CreateGrid();
+	//Reset spaces with no ship and set spaces with a ship to occupied
 	template<typename T>void CheckGrid(T& fleet);
 
 	void Listen(int mouseX, int mouseY);

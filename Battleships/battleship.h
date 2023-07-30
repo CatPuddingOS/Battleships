@@ -6,7 +6,7 @@
 class Battleship : public Ship
 {
 public:
-	Battleship() { Initialize(4); };
+	Battleship() { Initialize(4, "Battleship"); };
 };
 
 #endif // !_BATTLESHIP_

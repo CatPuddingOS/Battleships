@@ -19,6 +19,8 @@ void Cell::Initialize(int id, float xpos, float ypos, float width, float height)
 	cellBody.w = Width;
 	cellBody.h = Height;
 
+	color = std::make_unique<Color>();
+
 	//Needs a cleanup
 	for (int i = 0; i < 5; i++)
 	{
@@ -53,9 +55,9 @@ bool Cell::MouseEnter(int x, int y)
 	if (x >= cellBody.x && x <= cellBody.x + cellBody.w && y >= cellBody.y && y <= cellBody.y + cellBody.h)
 	{
 		if (active == true) { return true; }
-
-		//std::cout << "\n\nEntered Cell " << ID << "\n\n";
+		
 		active = true;
+		if (occupied) { std::cout << occupant << std::endl; }
 		return true;
 	}
 	return false;
@@ -75,13 +77,60 @@ void Cell::Listen(int mouseX, int mouseY)
 	}
 }
 
-void Cell::Render(SDL_Renderer* renderer)
+void Cell::SetRenderColor()
 {
-	active == true ? SDL_SetRenderDrawColor(renderer, 0, 0, 50, 255) : SDL_SetRenderDrawColor(renderer, 50, 0, 0, 255);
+	if (active)
+	{
+		color->R = 0;
+		color->G = 0;
+		color->B = 50;
+	}
+	else
+	{
+		color->R = 50;
+		color->G = 0;
+		color->B = 0;
+	}
+
 	if (occupied == true)
 	{
-		SDL_SetRenderDrawColor(renderer, 0, 50, 0, 255);
+		if (occupant == "Carrier")
+		{
+			color->R = 50;
+			color->G = 50;
+			color->B = 50;
+		}
+		else if (occupant == "Battleship")
+		{
+			color->R = 50;
+			color->G = 50;
+			color->B = 0;
+		}
+		else if (occupant == "Cruiser")
+		{
+			color->R = 0;
+			color->G = 50;
+			color->B = 0;
+		}
+		else if (occupant == "Submarine")
+		{
+			color->R = 50;
+			color->G = 0;
+			color->B = 50;
+		}
+		else if (occupant == "Destroyer")
+		{
+			color->R = 0;
+			color->G = 50;
+			color->B = 50;
+		}
 	}
+}
+
+void Cell::Render(SDL_Renderer* renderer)
+{
+	SetRenderColor();
+	SDL_SetRenderDrawColor(renderer, color->R, color->G, color->B, color->Trans);
 	SDL_RenderFillRect(renderer, &cellBody);
 
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);

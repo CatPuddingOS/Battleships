@@ -13,19 +13,14 @@ std::unique_ptr<Fleet> fleetInstance = nullptr;
 void Game::Initialize(const char* title, int width, int height, bool fullscreen) 
 {
 	//Initialize SDL
-	if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
-		std::cout << "!!! SDL_Init() has failed !!!" << std::endl; running = false;
-	}
-	else {
-		std::cout << "### SDL Initialized ###" << std::endl;
-	}
+	if (SDL_Init(SDL_INIT_EVERYTHING) < 0) { std::cout << "!!! SDL_Init() has failed !!!" << std::endl; running = false; }
+	else { std::cout << "### SDL Initialized ###" << std::endl; }
 
 	//Create window and renderer
-	if (SDL_CreateWindowAndRenderer(width, height, 0, &window, &renderer) < 0) {
-		std::cout << "!!! SDL_Create() has failed !!!" << std::endl;
-	}
-	else {
-		std::cout << "### Window and renderer created ###" << std::endl;
+	if (SDL_CreateWindowAndRenderer(width, height, 0, &window, &renderer) < 0) { std::cout << "!!! SDL_Create() has failed !!!" << std::endl; }
+	else 
+	{ 
+		std::cout << "### Window and renderer created ###" << std::endl; 
 		SDL_SetWindowResizable(window, SDL_TRUE);
 	}
 	
@@ -34,15 +29,24 @@ void Game::Initialize(const char* title, int width, int height, bool fullscreen)
 	gridInstance->CreateGrid();
 
 	fleetInstance = std::make_unique<Fleet>();
-	fleetInstance->FleetScatter(gridInstance->cellCount);
-
-	gridInstance->CheckGrid(fleetInstance); 
+	for (int s = 0; s < fleetInstance->fleetArr.size(); s++)
+	{
+		fleetInstance->fleetArr[s].SetLocation(gridInstance->AssignLocation(fleetInstance->fleetArr[s].GetSize()));
+	}
 
 	running = true;
 }
 
 void Game::Update() 
 {
+	if (fleetInstance->GetScatterStatus())
+	{
+		for (int s = 0; s < fleetInstance->fleetArr.size(); s++)
+		{
+			fleetInstance->fleetArr[s].SetLocation(gridInstance->AssignLocation(fleetInstance->fleetArr[s].GetSize()));
+		}
+		fleetInstance->FleetScatter();
+	}
 	gridInstance->CheckGrid(fleetInstance);
 }
 
@@ -62,7 +66,7 @@ void Game::Handle()
 			{
 			case SDLK_w:
 				std::cout << "\n\n### --- RESETTING --- ###\n\n";
-				fleetInstance->FleetScatter(gridInstance->cellCount);
+				fleetInstance->FleetScatter();
 				break;
 			default:
 				break;

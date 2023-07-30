@@ -10,7 +10,7 @@ class Fleet
 public:
 	std::vector<Ship> fleetArr;
 
-	Fleet() : fleetDestroyed(0), fleetSize(5) 
+	Fleet() : shouldScatter(false), fleetDestroyed(0), fleetSize(5)
 	{  
 		carrierInstance = std::make_unique<Carrier>();
 		battleshipInstance = std::make_unique<Battleship>();
@@ -26,7 +26,9 @@ public:
 		fleetArr.push_back(*destroyerInstance);
 	}
 
-	void FleetScatter(int range); //randomly place the fleet of ships on a grid. Ships are placed vertically and horizontally.
+	void FleetScatter(); //Toggles the shouldScatter member.
+
+	bool GetScatterStatus();
 	int GetSize();
 
 private:
@@ -35,6 +37,7 @@ private:
 	std::unique_ptr<Ship> cruiserInstance;
 	std::unique_ptr<Ship> submarineInstance;
 	std::unique_ptr<Ship> destroyerInstance;
+	bool shouldScatter;
 	bool fleetDestroyed;
 	int fleetSize;
 };

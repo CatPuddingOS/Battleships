@@ -6,7 +6,7 @@
 class Carrier : public Ship
 {
 public:
-	Carrier() { Initialize(5, "Battlship"); };
+	Carrier() { Initialize(5, "Carrier"); };
 };
 
 #endif // !_CARRIER_

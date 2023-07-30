@@ -4,6 +4,13 @@
 #include <SDL.h>
 #include <vector>
 
+struct Color
+{
+	int R, G, B, Trans;
+
+	Color() : R(255), G(255), B(255), Trans(255) {};
+};
+
 class Cell
 {
 public:
@@ -11,6 +18,7 @@ public:
 	bool struck; // True if the selected cell has been struck once.
 	bool active;
 	bool occupied; //True if there is an occupant object in the selected cell.
+	std::string occupant;
 	float Width, Height;
 	int X, Y;
 
@@ -21,11 +29,15 @@ public:
 	void Initialize(int id, float xpos, float ypos, float width, float height);
 	bool MouseEnter(int x, int y); //Returns true if the mouse intersects the cell, false otherwise
 	void MouseLeave(); //Sets active member variable to false
+	void SetRenderColor();
 
 	void Listen(int mouseX, int mouseY);
 	void Update();
 	void Render(SDL_Renderer* renderer);
 
+	/*DEGUG*/
+private:
+	std::unique_ptr<Color> color;
 };
 
 #endif // !_CELL_

@@ -1,12 +1,14 @@
 #include <SDL.h>
 #include "fleet.h"
 
-void Fleet::FleetScatter(int range)
+void Fleet::FleetScatter()
 {
-	for (int i = 0; i < fleetSize; i++)
-	{
-		fleetArr[i].GenerateLocation(range);
-	}
+	shouldScatter == true ? shouldScatter = false : shouldScatter = true;
+}
+
+bool Fleet::GetScatterStatus()
+{
+	return shouldScatter;
 }
 
 int Fleet::GetSize()

@@ -38,40 +38,36 @@ void Grid::CreateGrid()
 }
 
 /*To use: pass the size of the ship and assign the return value of the method to the location vector of the ship used in the param pass*/
-std::vector<int> Grid::AssignLocation(int range)
+std::vector<int> Grid::AssignLocation(int size)
 {
-	/*Add checks for other ships in path. ex. if(this ship + direction == cell occupied) {move away}*/
-
-	std::vector<int> locations;
 	int orientation;
-	int size = range;
 	bool greenlight;
+	std::vector<int> locations;
 
+	//Randomly generate starting position and an orientation to follow
 	std::random_device rd;
 	std::mt19937 gen(rd());
 	std::uniform_int_distribution<> dis(0, cellCount - 1);
+	locations.push_back(dis(gen));
 
 	std::uniform_int_distribution<> dist(1, 2);
 	dist(gen) == 1 ? orientation = Horizontal : orientation = Vertical;
-	locations.push_back(dis(gen));
 
+	//Validate starting position
 	while (cellArr[locations[0]]->occupied == true)
 	{ 
-		std::cout << "Finding initial location\n";
 		locations[0] = (dis(gen));
 	}
 	cellArr[locations[0]]->occupied = true;
 
-	std::cout << "Starting position " << locations[0] << " checks out\n\n";
-	int modifier;
+	//Validate position viability by looking at surrounding spaces
 	do {
-		modifier = orientation;
-		std::cout << "Starting loop at " << locations[0] <<"\n\n";
+		int modifier = orientation;
 		greenlight = true;
 		
 		if (cellArr[locations[0]]->occupied) { greenlight = false; }
 
-		for (int i = 0; i < range+2; i++)
+		for (int i = 0; i < size + 2; i++)
 		{
 			if (locations[0] - modifier < cellArr.size())
 			{
@@ -90,59 +86,44 @@ std::vector<int> Grid::AssignLocation(int range)
 		}
 	} while (!greenlight);
 
-	std::cout << "Ending loop at" << locations[0] << "\n\n";
-
-	if (range < 2) { return locations; };
-
-	std::cout << "Starting push at: " << locations[0] << std::endl;
+	//Assign remaining length of ship to locations vec
 	for (int i = 0; i < size - 1; i++)
 	{
 		cellArr[locations[i]]->occupied = true;
-		/*Check all the cells around the ship based on size and orientation
-		If a cell is marked as occupied, pick a new location*/
-
-
 		//Prevent Out of Scope exceptions and row hopping
 		//If start location is Out of Scope --or-- next location is near the end of the row 
 		if (locations[0] >= cellCount - size || locations[0] % 10 >= size + 1 && orientation == Horizontal)
 		{
-			std::cout << "Condition Out of range / Row Hop\n";
 			if (locations[i] - orientation < 0)
 			{
 				locations = ShiftForward(locations, orientation);
 				locations.push_back(locations[i] - orientation);
+				cellArr[locations[i]]->occupied = true;
 			}
 			else
 			{
 				locations.push_back(locations[i] - orientation);
+				cellArr[locations[i]]->occupied = true;
 			}
-			std::cout << "Condition 1	END\n";
-			cellArr[locations[i]]->occupied = true;
 			continue;
 		}
 		else if (locations[i] + orientation >= cellCount)
 		{
-			std::cout << "Condition Back\n";
 			locations = ShiftBackward(locations, orientation);
 			locations.push_back(locations[i] + orientation);
-			std::cout << "Back Restricting to: " << locations[i] + orientation << std::endl;
+			cellArr[locations[i]]->occupied = true;
 			continue;
 		}
 		else if (locations[i] + orientation % 10 == 0)
 		{
-			std::cout << "Condition Forward\n";
 			locations = ShiftForward(locations, orientation);
 			locations.push_back(locations[i] - orientation);
-			std::cout << "Forward Restricting to: " << locations[i] - orientation << std::endl;
+			cellArr[locations[i]]->occupied = true;
 			continue;
 		}
-
-		std::cout << "Default pushing to: " << locations[i] + orientation << std::endl;
 		locations.push_back(locations[i] + orientation);
-		std::cout << "END ITERATION\n";
 		cellArr[locations[i]]->occupied = true;
 	}
-	std::cout << "END LOOP\n\n";
 	cellArr[locations.back()]->occupied = true;
 	return locations;
 }
@@ -154,10 +135,8 @@ std::vector<int> Grid::ShiftForward(std::vector<int> vec, int orientation)
 
 	for (int r = 0; r < vec.size(); r++)
 	{
-		std::cout << "Rewriting: " << vec[r] << " to ";
 		vec[r] += orientation;
 		cellArr[vec[r]]->occupied = true;
-		std::cout << vec[r] << "\n\n";
 	}
 	return vec;
 }
@@ -169,10 +148,8 @@ std::vector<int> Grid::ShiftBackward(std::vector<int> vec, int orientation)
 
 	for (int r = 0; r < vec.size(); r++)
 	{
-		std::cout << "Rewriting: " << vec[r] << " to ";
 		vec[r] -= orientation;
 		cellArr[vec[r]]->occupied = true;
-		std::cout << vec[r] << "\n\n";
 	}
 	return vec;
 }

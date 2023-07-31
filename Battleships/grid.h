@@ -22,7 +22,7 @@ public:
 
 	void Initialize(int row, int column, int screenWidth, int screenHeight);
 	void CreateGrid();
-	std::vector<int> AssignLocation(int range);
+	std::vector<int> AssignLocation(int size);
 	std::vector<int> ShiftForward(std::vector<int> vec, int orientation);
 	std::vector<int> ShiftBackward(std::vector<int> vec, int orientation);
 	template<typename T>void CheckGrid(T& fleet);

@@ -31,6 +31,7 @@ void Game::Initialize(const char* title, int width, int height, bool fullscreen)
 	fleetInstance = std::make_unique<Fleet>();
 	for (int s = 0; s < fleetInstance->fleetArr.size(); s++)
 	{
+		std::cout << "\n\n\n- - - - - - - - - - - - - - - - - - - - Generating " << fleetInstance->fleetArr[s].GetName() << " - - - - - - - - - - - - - - - - - - - -\n\n";
 		fleetInstance->fleetArr[s].SetLocation(gridInstance->AssignLocation(fleetInstance->fleetArr[s].GetSize()));
 	}
 
@@ -43,6 +44,7 @@ void Game::Update()
 	{
 		for (int s = 0; s < fleetInstance->fleetArr.size(); s++)
 		{
+			std::cout << "\n\n\n- - - - - - - - - - - - - - - - - - - - Generating " << fleetInstance->fleetArr[s].GetName() << " - - - - - - - - - - - - - - - - - - - -\n\n";
 			fleetInstance->fleetArr[s].SetLocation(gridInstance->AssignLocation(fleetInstance->fleetArr[s].GetSize()));
 		}
 		fleetInstance->FleetScatter();
@@ -66,6 +68,7 @@ void Game::Handle()
 			{
 			case SDLK_w:
 				std::cout << "\n\n### --- RESETTING --- ###\n\n";
+				gridInstance->ResetGrid();
 				fleetInstance->FleetScatter();
 				break;
 			default:

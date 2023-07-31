@@ -26,6 +26,7 @@ public:
 	std::vector<int> ShiftForward(std::vector<int> vec, int orientation);
 	std::vector<int> ShiftBackward(std::vector<int> vec, int orientation);
 	template<typename T>void CheckGrid(T& fleet);
+	void ResetGrid();
 
 	void Listen(int mouseX, int mouseY);
 	void Update();

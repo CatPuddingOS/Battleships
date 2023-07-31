@@ -27,7 +27,6 @@ public:
 	}
 
 	void FleetScatter(); //Toggles the shouldScatter member.
-
 	bool GetScatterStatus();
 	int GetSize();
 

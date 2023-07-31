@@ -127,6 +127,13 @@ void Cell::SetRenderColor()
 	}
 }
 
+void Cell::ResetCell()
+{
+	occupied = false;
+	occupant = "";
+	struck = false;
+}
+
 void Cell::Render(SDL_Renderer* renderer)
 {
 	SetRenderColor();

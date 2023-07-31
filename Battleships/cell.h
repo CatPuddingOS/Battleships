@@ -30,6 +30,7 @@ public:
 	bool MouseEnter(int x, int y); //Returns true if the mouse intersects the cell, false otherwise
 	void MouseLeave(); //Sets active member variable to false
 	void SetRenderColor();
+	void ResetCell();
 
 	void Listen(int mouseX, int mouseY);
 	void Update();

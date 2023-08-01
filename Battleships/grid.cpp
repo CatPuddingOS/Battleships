@@ -38,7 +38,7 @@ void Grid::CreateGrid()
 }
 
 /*To use: pass the size of the ship and assign the return value of the method to the location vector of the ship used in the param pass*/
-std::vector<int> Grid::AssignLocation(int size)
+std::vector<int> Grid::AssignLocation(int shipSize)
 {
 	int orientation;
 	bool greenlight;
@@ -58,7 +58,6 @@ std::vector<int> Grid::AssignLocation(int size)
 	{ 
 		locations[0] = (dis(gen));
 	}
-	cellArr[locations[0]]->occupied = true;
 
 	//Validate position viability by looking at surrounding spaces
 	do {
@@ -67,7 +66,7 @@ std::vector<int> Grid::AssignLocation(int size)
 		
 		if (cellArr[locations[0]]->occupied) { greenlight = false; }
 
-		for (int i = 0; i < size + 2; i++)
+		for (int i = 0; i < shipSize + 2; i++)
 		{
 			if (locations[0] - modifier < cellArr.size())
 			{
@@ -85,14 +84,15 @@ std::vector<int> Grid::AssignLocation(int size)
 			locations[0] = dis(gen);
 		}
 	} while (!greenlight);
+	cellArr[locations[0]]->occupied = true;
 
 	//Assign remaining length of ship to locations vec
-	for (int i = 0; i < size - 1; i++)
+	for (int i = 0; i < shipSize - 1; i++)
 	{
 		cellArr[locations[i]]->occupied = true;
 		//Prevent Out of Scope exceptions and row hopping
 		//If start location is Out of Scope --or-- next location is near the end of the row 
-		if (locations[0] >= cellCount - size || locations[0] % 10 >= size + 1 && orientation == Horizontal)
+		if (locations[0] >= cellCount - shipSize || locations[0] % 10 >= shipSize + 1 && orientation == Horizontal)
 		{
 			if (locations[i] - orientation < 0)
 			{
@@ -162,15 +162,15 @@ template<typename T> void Grid::CheckGrid(T &fleet)
 		cellArr[c]->occupied = false;
 	}
 
-	//Set cells that match the ships location are flagged occupied
+	//Cells that match the ships location are flagged as occupied
 	std::vector<int> vec;
 	for (int s = 0; s < fleet->GetSize(); s++)
 	{
-		vec = fleet->fleetArr[s].GetLocation();
+		vec = fleet->fleetArr[s]->GetLocation();
 		for (int i = 0; i < vec.size(); i++)
 		{
 			cellArr[vec[i]]->occupied = true;
-			cellArr[vec[i]]->occupant = fleet->fleetArr[s].GetName();
+			cellArr[vec[i]]->occupant = fleet->fleetArr[s]->GetName();
 		}
 	}
 }
@@ -183,16 +183,16 @@ void Grid::ResetGrid()
 	}
 }
 
-void Grid::Listen(int mouseX, int mouseY)
+void Grid::Listen(int mouseX, int mouseY, bool selecting)
 {
 	//Listen for changes in each cell of the grid
 	for (int i = 0; i < cellCount; i++)
 	{
-		cellArr[i]->Listen(mouseX, mouseY);
+		cellArr[i]->Listen(mouseX, mouseY, selecting);
 	}
 }
 
-void Grid::Draw(SDL_Renderer * renderer, int Xstart, int Ystart, int Xend, int Yend) 
+void Grid::Render(SDL_Renderer * renderer, int Xstart, int Ystart, int Xend, int Yend) 
 {
 	for (int c = 0; c < cellCount; c++)
 	{

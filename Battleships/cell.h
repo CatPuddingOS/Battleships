@@ -17,6 +17,7 @@ public:
 	int ID; //Handle for the cell.
 	bool struck; // True if the selected cell has been struck once.
 	bool active;
+	bool target;
 	bool occupied; //True if there is an occupant object in the selected cell.
 	std::string occupant;
 	float Width, Height;
@@ -27,12 +28,12 @@ public:
 
 
 	void Initialize(int id, float xpos, float ypos, float width, float height);
-	bool MouseEnter(int x, int y); //Returns true if the mouse intersects the cell, false otherwise
+	bool MouseEnter(int x, int y, bool selecting); //Returns true if the mouse intersects the cell, false otherwise
 	void MouseLeave(); //Sets active member variable to false
 	void SetRenderColor();
 	void ResetCell();
 
-	void Listen(int mouseX, int mouseY);
+	void Listen(int mouseX, int mouseY, bool selecting);
 	void Update();
 	void Render(SDL_Renderer* renderer);
 

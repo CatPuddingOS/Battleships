@@ -8,7 +8,7 @@
 class Fleet
 {
 public:
-	std::vector<Ship> fleetArr;
+	std::vector<std::unique_ptr<Ship>> fleetArr;
 
 	Fleet() : shouldScatter(false), fleetDestroyed(0), fleetSize(5)
 	{  
@@ -19,16 +19,16 @@ public:
 		destroyerInstance = std::make_unique<Destroyer>();
 
 		fleetArr.reserve(fleetSize);
-		fleetArr.push_back(*carrierInstance);
-		fleetArr.push_back(*battleshipInstance);
-		fleetArr.push_back(*cruiserInstance);
-		fleetArr.push_back(*submarineInstance);
-		fleetArr.push_back(*destroyerInstance);
+		fleetArr.push_back(std::move(carrierInstance));
+		fleetArr.push_back(std::move(battleshipInstance));
+		fleetArr.push_back(std::move(cruiserInstance));
+		fleetArr.push_back(std::move(submarineInstance));
+		fleetArr.push_back(std::move(destroyerInstance));
 	}
 
-	void FleetScatter(); //Toggles the shouldScatter member.
-	bool GetScatterStatus();
-	int GetSize();
+	void FleetScatter() { shouldScatter == true ? shouldScatter = false : shouldScatter = true; }; //Toggles the shouldScatter member.
+	bool GetScatterStatus() { return shouldScatter; };
+	int GetSize() { return fleetSize; };
 
 private:
 	std::unique_ptr<Ship> carrierInstance;

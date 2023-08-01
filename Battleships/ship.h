@@ -10,22 +10,23 @@ class Ship
 public:
 	void Initialize(int s, std::string name)
 	{
-		size = s;
+		shipHp = s;
+		shipSize = s;
 		shipClass = name;
-		destroyed = false;
+		shipDestroyed = false;
 	}
 
-	void SetLocation(std::vector<int> vec) { location = vec; };
+	void SetLocation(std::vector<int> vec) { shipLocation = vec; };
+	void ShipDestroyed() { shipDestroyed = true; };
 
-	std::vector<int> GetLocation() { return location; }
+	std::vector<int> GetLocation() { return shipLocation; }
 	std::string GetName() { return shipClass; };
-	int GetSize() { return size; };
+	int GetSize() { return shipSize; };
 
 private:
+	bool shipDestroyed;
+	int shipHp, shipSize, orientation;
 	std::string shipClass;
-	int size;
-	bool destroyed;
-	int orientation;
-	std::vector<int> location;
+	std::vector<int> shipLocation;
 };
 #endif // !_SHIP_

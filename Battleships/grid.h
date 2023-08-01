@@ -22,15 +22,15 @@ public:
 
 	void Initialize(int row, int column, int screenWidth, int screenHeight);
 	void CreateGrid();
-	std::vector<int> AssignLocation(int size);
+	std::vector<int> AssignLocation(int shipSize);
 	std::vector<int> ShiftForward(std::vector<int> vec, int orientation);
 	std::vector<int> ShiftBackward(std::vector<int> vec, int orientation);
 	template<typename T>void CheckGrid(T& fleet);
 	void ResetGrid();
 
-	void Listen(int mouseX, int mouseY);
+	void Listen(int mouseX, int mouseY, bool selecting);
 	void Update();
-	void Draw(SDL_Renderer * renderer, int Xstart, int Ystart, int Xend, int Yend);
+	void Render(SDL_Renderer * renderer, int Xstart, int Ystart, int Xend, int Yend);
 	void Clear();
 
 private:

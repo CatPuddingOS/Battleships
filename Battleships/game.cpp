@@ -31,9 +31,10 @@ void Game::Initialize(const char* title, int width, int height, bool fullscreen)
 	fleetInstance = std::make_unique<Fleet>();
 	for (int s = 0; s < fleetInstance->fleetArr.size(); s++)
 	{
-		std::cout << "\n\n\n- - - - - - - - - - - - - - - - - - - - Generating " << fleetInstance->fleetArr[s].GetName() << " - - - - - - - - - - - - - - - - - - - -\n\n";
-		fleetInstance->fleetArr[s].SetLocation(gridInstance->AssignLocation(fleetInstance->fleetArr[s].GetSize()));
+		std::cout << "\n\n\n- - - - - - - - - - - - - - - - - - - - Generating " << fleetInstance->fleetArr[s]->GetName() << " - - - - - - - - - - - - - - - - - - - -\n\n";
+		fleetInstance->fleetArr[s]->SetLocation(gridInstance->AssignLocation(fleetInstance->fleetArr[s]->GetSize()));
 	}
+	gridInstance->CheckGrid(fleetInstance);
 
 	running = true;
 }
@@ -44,19 +45,19 @@ void Game::Update()
 	{
 		for (int s = 0; s < fleetInstance->fleetArr.size(); s++)
 		{
-			std::cout << "\n\n\n- - - - - - - - - - - - - - - - - - - - Generating " << fleetInstance->fleetArr[s].GetName() << " - - - - - - - - - - - - - - - - - - - -\n\n";
-			fleetInstance->fleetArr[s].SetLocation(gridInstance->AssignLocation(fleetInstance->fleetArr[s].GetSize()));
+			std::cout << "\n\n\n- - - - - - - - - - - - - - - - - - - - Generating " << fleetInstance->fleetArr[s]->GetName() << " - - - - - - - - - - - - - - - - - - - -\n\n";
+			fleetInstance->fleetArr[s]->SetLocation(gridInstance->AssignLocation(fleetInstance->fleetArr[s]->GetSize()));
 		}
 		fleetInstance->FleetScatter();
-	}
-	gridInstance->CheckGrid(fleetInstance);
+		//Band-aid for setting member variable 'occupant' in Cell classes
+		gridInstance->CheckGrid(fleetInstance);
+	}	
 }
 
 void Game::Handle()
 {
 	const Uint8* keyStates = SDL_GetKeyboardState(NULL);
 	SDL_Event e;
-	SDL_Scancode key;
 
 	while (SDL_PollEvent(&e))
 	{
@@ -75,7 +76,10 @@ void Game::Handle()
 				break;
 			}
 		case SDL_MOUSEMOTION:
-			gridInstance->Listen(e.motion.x, e.motion.y);
+			gridInstance->Listen(e.motion.x, e.motion.y, false);
+			break;
+		case SDL_MOUSEBUTTONDOWN:
+			gridInstance->Listen(e.motion.x, e.motion.y, true);
 			break;
 		default:
 			break;
@@ -97,7 +101,7 @@ void Game::Render()
 
 	//Colorize Viewport (Queue Rendering)
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-	gridInstance->Draw(renderer, 0, 0, 1920, 0);
+	gridInstance->Render(renderer, 0, 0, 1920, 0);
 
 	//Present Renering (Draw)
 	SDL_RenderPresent(renderer);

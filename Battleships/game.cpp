@@ -72,16 +72,12 @@ void Game::Handle()
 				gridInstance->ResetGrid();
 				fleetInstance->FleetScatter();
 				break;
-			default:
-				break;
 			}
 		case SDL_MOUSEMOTION:
 			gridInstance->Listen(e.motion.x, e.motion.y, false);
 			break;
 		case SDL_MOUSEBUTTONDOWN:
 			gridInstance->Listen(e.motion.x, e.motion.y, true);
-			break;
-		default:
 			break;
 		}
 

@@ -6,9 +6,9 @@
 
 struct Color
 {
-	int R, G, B, Trans;
+	int cellR, cellG, cellB, borderR, borderG, borderB, Trans;
 
-	Color() : R(255), G(255), B(255), Trans(255) {};
+	Color() : cellR(255), cellG(255), cellB(255), borderR(255), borderG(255), borderB(255), Trans(255) {};
 };
 
 class Cell
@@ -23,15 +23,14 @@ public:
 	float Width, Height;
 	int X, Y;
 
-	SDL_Rect cellBody; //Center rectangle of a cell
-	SDL_Point pointsArr[5]; //Points used to render lines
 
 
-	void Initialize(int id, float xpos, float ypos, float width, float height);
+	void Initialize(int id, int xpos, int ypos, int width, int height);
 	bool MouseEnter(int x, int y, bool selecting); //Returns true if the mouse intersects the cell, false otherwise
 	void MouseLeave(); //Sets active member variable to false
 	void SetRenderColor();
 	void ResetCell();
+	void CallHit();
 
 	void Listen(int mouseX, int mouseY, bool selecting);
 	void Update();
@@ -40,6 +39,15 @@ public:
 	/*DEGUG*/
 private:
 	std::unique_ptr<Color> color;
+	SDL_Rect cellBody; //Center rectangle of a cell
+	SDL_Point pointsArr[5]; //Points used to render lines
+
+
+	/*The mere presence of this array is crippling performance, memory usage, and code reliability.
+	When assigned to by iterative value (i) it causes the color object to delete itself and leak memory?
+	The overlay its data is used to generate is a gaint memory hog and barely works.
+	Cool ide but I may need to trash it.*/
+	SDL_Point hitOverlay[4]; //Points used for the X overlay
 };
 
 #endif // !_CELL_
